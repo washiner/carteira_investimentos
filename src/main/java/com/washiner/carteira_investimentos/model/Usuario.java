@@ -85,5 +85,5 @@ public class Usuario {
     // fetch = LAZY: só carrega a Carteira do banco quando você realmente acessar
     //   Sem LAZY, toda consulta de Usuário já puxaria a Carteira também (ineficiente)
     @OneToOne(mappedBy = "usuario", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private CarteiraInvestimentosApplication carteiraInvestimentosApplication;
+    private Carteira carteira;
 }
