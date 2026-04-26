@@ -1,0 +1,36 @@
+# docker-compose.yml
+# Define a versão da sintaxe do Docker Compose
+version: '3.8'
+
+# 'services' é onde declaramos cada container que queremos subir
+services:
+
+  # Nome do serviço — pode ser qualquer nome, usamos 'db' por convenção
+  db:
+    # Imagem oficial do PostgreSQL na versão 16
+    # Sempre fixe a versão — evita surpresas com atualizações automáticas
+    image: postgres:16
+
+    # 'container_name' dá um nome fixo ao container
+    # Sem isso, o Docker gera um nome aleatório
+    container_name: carteira_db
+
+    # Variáveis de ambiente que o PostgreSQL usa para se configurar
+    environment:
+      POSTGRES_DB: carteira_db        # Nome do banco que será criado
+      POSTGRES_USER: carteira_user    # Usuário do banco
+      POSTGRES_PASSWORD: carteira123  # Senha (nunca use isso em produção!)
+
+    # 'ports' mapeia porta do container para porta da sua máquina
+    # formato: "porta_sua_maquina:porta_container"
+    ports:
+      - "5432:5432"  # Acesse via localhost:5432
+
+    # 'volumes' persiste os dados do banco mesmo se o container morrer
+    # 'carteira_data' é um volume nomeado (definido abaixo)
+    volumes:
+      - carteira_data:/var/lib/postgresql/data
+
+# Define volumes nomeados — o Docker gerencia onde ficam no disco
+volumes:
+  carteira_data:
